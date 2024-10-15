@@ -1,0 +1,22 @@
+#include <Arduino.h>
+
+#define BTN_PB2 2
+
+int state = 0;
+
+void setup()
+{
+  Serial.begin(28800);
+
+  pinMode(BTN_PB2, INPUT_PULLUP);
+}
+
+void loop()
+{
+  if (digitalRead(BTN_PB2) == 0)
+  {
+    Serial.println("Button was pressed");
+  }
+
+  delay(100);
+}

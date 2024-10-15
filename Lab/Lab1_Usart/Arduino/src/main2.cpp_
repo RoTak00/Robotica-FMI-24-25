@@ -1,0 +1,35 @@
+#include <Arduino.h>
+
+#define LED_BLUE 3
+#define LED_GREEN 15
+#define LED_RED 13
+
+#define BTN_PB2 2
+
+int state = 0;
+
+void setup()
+{
+  pinMode(LED_BLUE, OUTPUT);
+  pinMode(LED_RED, OUTPUT);
+  pinMode(LED_GREEN, OUTPUT);
+
+  pinMode(BTN_PB2, INPUT_PULLUP);
+
+  digitalWrite(LED_RED, HIGH);
+  digitalWrite(LED_BLUE, HIGH);
+  digitalWrite(LED_GREEN, LOW);
+}
+
+void loop()
+{
+  if (digitalRead(BTN_PB2) == 0)
+  {
+    digitalWrite(LED_BLUE, LOW);
+  }
+  else
+  {
+    digitalWrite(LED_BLUE, HIGH);
+  }
+  delay(100);
+}
