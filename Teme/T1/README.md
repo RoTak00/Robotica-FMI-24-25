@@ -26,19 +26,19 @@ Apăsarea lungă a butonului de stop va opri încărcarea forțat și va reseta 
 
 ## 1.4.1. Montaj
 
-![Montajul EV Charger](https://images.rotak.ro/github/robotica_1/Montaj.jpeg)
+<a href = "https://images.rotak.ro/github/robotica_1/Montaj.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_1/Montaj.jpeg" width = "300"></a>
 
 ## 1.4.2. Detaliu Pini
 
-![Detaliu Pini](https://images.rotak.ro/github/robotica_1/Detaliu_Pini.jpeg)
+<a href = "https://images.rotak.ro/github/robotica_1/Detaliu_Pini.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_1/Detaliu_Pini.jpeg" width = "300"></a>
 
 ## 1.4.3. Detaliu LED-uri
 
-![Detaliu LED-uri](https://images.rotak.ro/github/robotica_1/Detaliu_LED-uri.jpeg)
+<a href = "https://images.rotak.ro/github/robotica_1/Detaliu_LED-uri.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_1/Detaliu_LED-uri.jpeg" width = "300"></a>
 
 ## 1.4.4. Detaliu Butoane
 
-![Detaliu Butoane](https://images.rotak.ro/github/robotica_1/Detaliu_Butoane.jpeg)
+<a href = "https://images.rotak.ro/github/robotica_1/Detaliu_Butoane.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_1/Detaliu_Butoane.jpeg" width = "300"></a>
 
 # 1.5 Videoclip Montaj
 
@@ -46,6 +46,6 @@ Un videoclip YouTube Shorts care demonstrează funcționalitatea montajului poat
 
 # 1.6 Schema Electrica
 
-![Schema electrica a montajului](https://images.rotak.ro/github/robotica_1/Model.png)
+<a href = "https://images.rotak.ro/github/robotica_1/Model.png" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_1/Model.png" width = "300"></a>
 
 Takacs Robert
