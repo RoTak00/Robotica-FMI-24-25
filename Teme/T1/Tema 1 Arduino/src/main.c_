@@ -1,0 +1,351 @@
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <stdbool.h>
+#include <millis.h>
+
+void setup();
+void loop();
+
+// LED-URI
+#define LED1_DDR DDRB
+#define LED2_DDR DDRB
+#define LED3_DDR DDRB
+#define LED4_DDR DDRB
+
+#define LED1_PORT PORTB
+#define LED2_PORT PORTB
+#define LED3_PORT PORTB
+#define LED4_PORT PORTB1
+
+#define LED1_PIN PB2
+#define LED2_PIN PB1
+#define LED3_PIN PB0
+#define LED4_PIN PB3
+
+#define LED1_REG PINB
+#define LED2_REG PINB
+#define LED3_REG PINB
+#define LED4_REG PINB
+
+// LED RGB
+#define RGB_RED_DDR DDRD
+#define RGB_GREEN_DDR DDRD
+#define RGB_BLUE_DDR DDRD
+
+#define RGB_RED_PORT PORTD
+#define RGB_GREEN_PORT PORTD
+#define RGB_BLUE_PORT PORTD
+
+#define RGB_RED_PIN PD6
+#define RGB_GREEN_PIN PD4
+#define RGB_BLUE_PIN PD5
+
+#define RGB_RED_REG PIND
+#define RGB_GREEN_REG PIND
+#define RGB_BLUE_REG PIND
+
+// BUTTONS
+#define BTN_START_DDR DDRD
+#define BTN_STOP_DDR DDRD
+
+#define BTN_START_PORT PORTD
+#define BTN_STOP_PORT PORTD
+
+#define BTN_START_PIN PD3
+#define BTN_STOP_PIN PD2
+
+#define BTN_START_REG PIND
+#define BTN_STOP_REG PIND
+
+#define HIGH 1
+#define LOW 0
+
+// Timp debounce pentru butonul de start si butonul de stop
+#define DEBOUNCE_START_DELAY 50
+#define DEBOUNCE_STOP_DELAY 1000
+
+// Durata incarcarii unui LED
+#define CHARGE_TIME_PER_LED 3000
+// Durata blink-ului unui LED in starea CHARGING
+#define BLINK_PER_LED 300
+// Numarul de LED-uri de charging
+#define NO_CHARGING_LEDS 4
+// Durata blink-ului unui LED in starea ENDING
+#define ENDING_BLINK_PER_LED 500
+// Dupa cate blink-uri se termina starea ENDING
+#define ENDING_BLINKS 3
+
+typedef enum
+{
+    FREE,
+    CHARGING,
+    ENDING
+} StationState;
+
+StationState state = FREE;
+
+// buttons
+char start_button_action = false;
+char stop_button_action = false;
+
+int start_button_state = HIGH;
+int start_button_last_state = LOW;
+unsigned long start_button_last_debounce_time;
+
+int stop_button_state = HIGH;
+int stop_button_last_state = LOW;
+unsigned long stop_button_last_debounce_time;
+// end buttons
+
+// Charging state
+unsigned int charging_time_elapsed = 0;
+unsigned int charging_start_time = 0;
+unsigned short current_charging_led = 0;
+// Helper folosit pentru starea led-urilor (par si impar)
+unsigned short current_charging_blink_helper = 0;
+
+// Ending state
+unsigned int ending_time_elapsed = 0;
+unsigned int ending_start_time = 0;
+unsigned short ending_blink_helper = 0;
+
+int main()
+{
+    init_millis(F_CPU);
+    sei();
+    setup();
+
+    while (1)
+    {
+        loop();
+    }
+
+    return 0;
+}
+
+void setup()
+{
+    // LED-uri
+    LED1_DDR |= (1 << LED1_PIN);
+    LED2_DDR |= (1 << LED2_PIN);
+    LED3_DDR |= (1 << LED3_PIN);
+    LED4_DDR |= (1 << LED4_PIN);
+
+    // LED RGB
+    RGB_RED_DDR |= (1 << RGB_RED_PIN);
+    RGB_GREEN_DDR = (1 << RGB_GREEN_PIN);
+    RGB_BLUE_DDR |= (1 << RGB_BLUE_PIN);
+
+    // BUTTONS
+    BTN_START_DDR &= ~(1 << BTN_START_PIN);
+    BTN_STOP_DDR &= ~(1 << BTN_STOP_PIN);
+
+    BTN_START_PORT |= (1 << BTN_START_PIN);
+    BTN_STOP_PORT |= (1 << BTN_STOP_PIN);
+
+    start_button_last_debounce_time = millis();
+    stop_button_last_debounce_time = millis();
+
+    LED1_REG |= (1 << LED1_PIN);
+    LED2_REG |= (1 << LED2_PIN);
+    LED3_REG |= (1 << LED3_PIN);
+    LED4_REG |= (1 << LED4_PIN);
+
+    RGB_RED_REG &= ~(1 << RGB_RED_PIN);
+    RGB_GREEN_REG |= (1 << RGB_GREEN_PIN);
+    RGB_BLUE_REG &= ~(1 << RGB_BLUE_PIN);
+}
+
+void loop()
+{
+
+    /* DEBOUNCING PRELUAT DIN
+    https://deepbluembedded.com/arduino-button-debouncing/
+    */
+
+    start_button_action = false;
+    stop_button_action = false;
+
+    // BUTON START
+    int start_input = !(BTN_START_REG & (1 << BTN_START_PIN));
+    // If the switch changed, due to noise or pressing:
+    if (start_input != start_button_last_state)
+    {
+        // reset the debouncing timer
+        start_button_last_debounce_time = millis();
+    }
+
+    if ((millis() - start_button_last_debounce_time) > DEBOUNCE_START_DELAY)
+    {
+
+        // if the button state has changed:
+        if (start_input != start_button_state)
+        {
+            start_button_state = start_input;
+            // only toggle the LED if the new button state is HIGH
+            if (start_button_state == HIGH)
+            {
+                start_button_action = true;
+            }
+        }
+    }
+    start_button_last_state = start_input;
+
+    // END BUTON START
+
+    // BUTON STOP
+    int stop_input = (BTN_STOP_REG & (1 << BTN_STOP_PIN));
+    // If the switch changed, due to noise or pressing:
+    if (stop_input != stop_button_last_state)
+    {
+        // reset the debouncing timer
+        stop_button_last_debounce_time = millis();
+    }
+
+    if ((millis() - stop_button_last_debounce_time) > DEBOUNCE_STOP_DELAY)
+    {
+
+        // if the button state has changed:
+        if (stop_input != stop_button_state)
+        {
+            stop_button_state = stop_input;
+            // only toggle the LED if the new button state is HIGH
+            if (stop_button_state == HIGH)
+            {
+                stop_button_action = true;
+            }
+        }
+    }
+    stop_button_last_state = stop_input;
+
+    // END BUTON stop
+
+    if (state == FREE)
+    {
+        // LED-uri incarcare oprite
+        LED1_REG &= ~(1 << LED1_PIN);
+        LED2_REG &= ~(1 << LED2_PIN);
+        LED3_REG &= ~(1 << LED3_PIN);
+        LED4_REG &= ~(1 << LED4_PIN);
+
+        // led RGB verde
+        RGB_GREEN_REG |= (1 << RGB_GREEN_PIN);
+        RGB_RED_REG &= ~(1 << RGB_RED_PIN);
+        RGB_BLUE_REG &= ~(1 << RGB_BLUE_PIN);
+
+        // daca e apasat butonul de start,
+        // trecem in CHARGING
+        if (start_button_action == true)
+        {
+            state = CHARGING;
+            charging_start_time = millis();
+            current_charging_led = 0;
+            current_charging_blink_helper = 0;
+
+            LED1_REG &= ~(1 << LED1_PIN);
+            LED2_REG &= ~(1 << LED2_PIN);
+            LED3_REG &= ~(1 << LED3_PIN);
+            LED4_REG &= ~(1 << LED4_PIN);
+
+            RGB_GREEN_REG &= ~(1 << RGB_GREEN_PIN);
+            RGB_RED_REG |= (1 << RGB_RED_PIN);
+            RGB_BLUE_REG &= ~(1 << RGB_BLUE_PIN);
+        }
+    }
+    else if (state == CHARGING)
+    {
+        // verificam cat timp a trecut de la
+        // inceputul incarcarii
+        charging_time_elapsed = millis() - charging_start_time;
+
+        // la fiecare 3 secunde
+        if (charging_time_elapsed > CHARGE_TIME_PER_LED * (current_charging_led + 1))
+        {
+            if (current_charging_led == 0)
+            {
+                LED1_REG |= (1 << LED1_PIN);
+            }
+            else if (current_charging_led == 1)
+            {
+                LED2_REG |= (1 << LED2_PIN);
+            }
+            else if (current_charging_led == 2)
+            {
+                LED3_REG |= (1 << LED3_PIN);
+            }
+            else if (current_charging_led == 3)
+            {
+                LED4_REG |= (1 << LED4_PIN);
+            }
+            current_charging_led += 1;
+        }
+
+        // pe baza helper-ului stim cand trebuie sa clipeasca
+        // led-ul activ
+        if (charging_time_elapsed > BLINK_PER_LED * current_charging_blink_helper)
+        {
+            // LED1 - current_charging_led este led-ul curent
+            // Does not work in C probably
+            if (current_charging_led == 0)
+            {
+                LED1_REG ^= (1 << LED1_PIN);
+            }
+            else if (current_charging_led == 1)
+            {
+                LED2_REG ^= (1 << LED2_PIN);
+            }
+            else if (current_charging_led == 2)
+            {
+                LED3_REG ^= (1 << LED3_PIN);
+            }
+            else if (current_charging_led == 3)
+            {
+                LED4_REG ^= (1 << LED4_PIN);
+            }
+            current_charging_blink_helper += 1;
+        }
+
+        // daca toate cele 4 led-uri au fost incarcate,
+        // trecem in animatia de ending
+        if (current_charging_led == NO_CHARGING_LEDS || (stop_button_action == true && charging_time_elapsed > DEBOUNCE_STOP_DELAY))
+        {
+            state = ENDING;
+            ending_time_elapsed = 0;
+            ending_start_time = millis();
+            ending_blink_helper = 0;
+
+            RGB_GREEN_REG &= ~(1 << RGB_GREEN_PIN);
+            RGB_RED_REG |= (1 << RGB_RED_PIN);
+            RGB_BLUE_REG &= ~(1 << RGB_BLUE_PIN);
+
+            LED1_REG &= ~(1 << LED1_PIN);
+            LED2_REG &= ~(1 << LED2_PIN);
+            LED3_REG &= ~(1 << LED3_PIN);
+            LED4_REG &= ~(1 << LED4_PIN);
+        }
+    }
+    else if (state == ENDING)
+    {
+        ending_time_elapsed = millis() - ending_start_time;
+
+        if (ending_time_elapsed > ENDING_BLINK_PER_LED * ending_blink_helper)
+        {
+            LED1_REG ^= (1 << LED1_PIN);
+            LED2_REG ^= (1 << LED2_PIN);
+            LED3_REG ^= (1 << LED3_PIN);
+            LED4_REG ^= (1 << LED4_PIN);
+
+            ending_blink_helper += 1;
+        }
+
+        // un blink inseamna blink on + blink off (deci 2*500ms)
+        if (ending_blink_helper > ENDING_BLINKS * 2)
+        {
+            state = FREE;
+
+            RGB_GREEN_REG |= (1 << RGB_GREEN_PIN);
+            RGB_RED_REG &= ~(1 << RGB_RED_PIN);
+            RGB_BLUE_REG &= ~(1 << RGB_BLUE_PIN);
+        }
+    }
+}
