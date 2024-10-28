@@ -42,12 +42,12 @@ StationState state = FREE;
 char start_button_action = false;
 char stop_button_action = false;
 
-int start_button_state = HIGH;
-int start_button_last_state = LOW;
+int start_button_state = LOW;
+int start_button_last_state = HIGH;
 unsigned long start_button_last_debounce_time;
 
-int stop_button_state = HIGH;
-int stop_button_last_state = LOW;
+int stop_button_state = LOW;
+int stop_button_last_state = HIGH;
 unsigned long stop_button_last_debounce_time;
 // end buttons
 
@@ -107,7 +107,7 @@ void loop()
     {
       start_button_state = start_input;
       // only toggle the LED if the new button state is HIGH
-      if (start_button_state == HIGH)
+      if (start_button_state == LOW)
       {
         start_button_action = true;
       }
@@ -134,7 +134,7 @@ void loop()
     {
       stop_button_state = stop_input;
       // only toggle the LED if the new button state is HIGH
-      if (stop_button_state == HIGH)
+      if (stop_button_state == LOW)
       {
         stop_button_action = true;
       }
