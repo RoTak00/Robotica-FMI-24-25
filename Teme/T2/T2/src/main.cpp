@@ -122,7 +122,7 @@ void initValues()
   // setam valori initiale
   onChangeFree();
 
-  randomSeed(millis());
+  randomSeed(analogRead(0));
   Serial.println("Welcome to Arduino TypeRacer");
 }
 
