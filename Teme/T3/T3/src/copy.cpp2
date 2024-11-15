@@ -1,0 +1,42 @@
+#include <Arduino.h>
+#include <SPI.h>
+
+void setup()
+{
+  Serial.begin(9600);
+
+  SPI.begin(); // Begins the SPI commnuication
+
+  SPI.setClockDivider(SPI_CLOCK_DIV8); // Sets clock for SPI communication at 8 (16/8=2Mhz)
+
+  digitalWrite(SS, HIGH);
+}
+
+int x = 1;
+
+void loop()
+{
+  byte master_send, master_receive;
+  delay(1000);
+  master_send = 1;
+  digitalWrite(SS, LOW);
+  master_receive = SPI.transfer(master_send);
+  digitalWrite(SS, HIGH);
+
+  Serial.print("Master send: ");
+  Serial.println(master_send);
+  Serial.print("Master receive: ");
+  Serial.println(master_receive);
+
+  delay(1000);
+
+  master_send = 0;
+  digitalWrite(SS, LOW);
+  master_receive = SPI.transfer(master_send);
+  digitalWrite(SS, HIGH);
+
+  Serial.print("Master send: ");
+  Serial.println(master_send);
+  Serial.print("Master receive: ");
+  Serial.println(master_receive);
+}
