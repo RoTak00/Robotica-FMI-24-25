@@ -11,6 +11,7 @@ void setup()
   initButtons();
   initServo();
   initLCD();
+  initVars();
 }
 
 void loop()

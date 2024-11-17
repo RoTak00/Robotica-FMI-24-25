@@ -17,9 +17,9 @@ void initVars();
 #define BTN_YELLOW (1 << 3)
 #define BTN_BLUE (1 << 4)
 
-#define AWAIT_RECEIVE (1 << 5)
 #define ACK (1 << 6)
-#define HELLO (1 << 7)
+#define END (1 << 7)
+#define SPI_SLAVE_TRANSMIT (1 << 5)
 
 #define GAME_STATE_IDLE (1 << 0)
 #define GAME_STATE_STARTING (1 << 4)
@@ -33,10 +33,25 @@ void initVars();
 #define BUTTON_DEBOUNCE_START 100
 #define STARTING_DELAY 3000
 
-#define PLAY_MAX_TIME 15000
+#define PLAY_MAX_TIME 10000
 
-#define SERVO_ANGLE (((millis() - game_current_state_start_time) / PLAY_MAX_TIME) * 180)
+#define MAX_PLAYER_REACTION 2000
+
+#define LIMIT_PLAYER_REACTION 5000
+#define MIN_SCORE 200
+
+#define SERVO_ANGLE ((int)(((float)(millis() - game_current_state_start_time) / (float)PLAY_MAX_TIME) * 180))
+#define SERVO_PIN 3
+
+#define LCD_RS 9
+#define LCD_EN 8
+#define LCD_D7 7
+#define LCD_D6 6
+#define LCD_D5 5
+#define LCD_D4 4
 
 #define die() exit(1)
+
+void printByte(uint8_t b);
 
 #endif

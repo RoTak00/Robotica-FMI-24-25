@@ -1,4 +1,7 @@
 #include "Variables.h"
+#include "Utils.h"
+#include <Servo.h>
+#include <LiquidCrystal.h>
 
 // Define the variables here
 uint8_t game_state = 0;
@@ -15,3 +18,11 @@ uint32_t player_1_score = 0;
 uint32_t player_2_score = 0;
 
 uint8_t current_player = 0;
+
+Servo master_servo;
+
+LiquidCrystal master_lcd(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
+uint8_t seconds_to_start = 3;
+
+uint8_t to_send_to_slave = 0;
+uint8_t received_from_slave = 0;

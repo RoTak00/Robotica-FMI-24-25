@@ -2,6 +2,9 @@
 #define LIB_VARIABLES
 
 #include <Arduino.h>
+#include <Servo.h>
+#include <Wire.h>
+#include <LiquidCrystal.h>
 
 // Initial values
 extern uint8_t game_state;
@@ -17,5 +20,13 @@ extern uint8_t current_player;
 
 extern uint32_t player_1_score;
 extern uint32_t player_2_score;
+
+extern Servo master_servo;
+
+extern uint8_t to_send_to_slave;
+extern uint8_t received_from_slave;
+
+extern LiquidCrystal master_lcd;
+extern uint8_t seconds_to_start;
 
 #endif
