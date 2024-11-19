@@ -78,6 +78,8 @@ Odată ce se primește valoarea END de la Master, se trece în starea NOT_PLAYIN
 
 # 1.7 Schema Electrica
 
-<a href = "https://images.rotak.ro/github/robotica_3/schema_electrica.png" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/schema_electrica.png" width = "300"></a>
+Click pentru a deschide imaginea in fullscreen
+
+<a href = "https://images.rotak.ro/github/robotica_3/schema_electrica.png" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/schema_electrica.png" width = "600"></a>
 
 Alexandru Norina & Takacs Robert
