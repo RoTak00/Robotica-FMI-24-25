@@ -12,3 +12,7 @@ Tema 1 - [EV Charger](https://github.com/RoTak00/Robotica-FMI-24-25/tree/main/Te
 Tema 2 - [TypeRacer Game](https://github.com/RoTak00/Robotica-FMI-24-25/tree/main/Teme/T2)
 
 Tema 3 - [Quick Time](https://github.com/RoTak00/Robotica-FMI-24-25/tree/main/Teme/T3) - cu Alexandru Norina
+
+## Relevant Labs
+
+Lab 5 - [SPI](https://github.com/RoTak00/Robotica-FMI-24-25/tree/main/Lab/Lab5_skel)

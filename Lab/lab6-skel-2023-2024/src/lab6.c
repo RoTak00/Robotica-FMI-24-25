@@ -10,7 +10,7 @@
 
 #define PM_BAUD 9600
 
-int main()
+int main222()
 {
 	// Initialize USART for writing to serial console.
 	USART0_init(CALC_USART_UBRR(PM_BAUD));
@@ -20,11 +20,21 @@ int main()
 	twi_init();
 
 	// TODO 2: Search all slaves with adresses within range 0x00-0x7F
+	twi_discover();
 
 	// TODO 3.1: Initialize TWI and MPL3115A2 sensor.
 
+	mpl3115a2_init();
+
 	while (1)
 	{
+		int8_t temp;
+		mpl3115a2_read_temperature(&temp);
+		USART0_print("Temperature: ");
+		char temp_str[6];
+		sprintf(temp_str, "%d", temp);
+		USART0_print(temp_str);
+		USART0_print("\n");
 		// mpl3115a2_read_pressure(TODO);
 		// mpl3115a2_read_temperature(TODO);
 

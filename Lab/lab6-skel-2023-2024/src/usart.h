@@ -36,4 +36,6 @@ char USART0_receive();
  */
 void USART0_print(const char *str);
 
+void USART0_print_hex(uint8_t value);
+
 #endif // USART_H_
