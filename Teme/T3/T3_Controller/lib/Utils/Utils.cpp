@@ -57,6 +57,7 @@ void initVars()
     game_state = GAME_STATE_IDLE;
 }
 
+// this was used for debugging
 void printByte(uint8_t b)
 {
     Serial.println("BYTE START");

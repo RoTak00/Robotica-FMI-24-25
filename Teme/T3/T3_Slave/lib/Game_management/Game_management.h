@@ -10,7 +10,6 @@
 #define PLAYER0_G 2
 #define PLAYER0_B 3
 
-
 #define PLAYER1_Buttons A1
 #define PLAYER1_Blue 6
 #define PLAYER1_Yellow 5

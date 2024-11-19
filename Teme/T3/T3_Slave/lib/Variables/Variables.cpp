@@ -1,7 +1,5 @@
 #include "Variables.h"
 
-// Define the variables here
-
 uint64_t player0_button_last_debounce_time = 0;
 uint8_t player0_button_state = NO_BTN;
 uint8_t player0_button_last_state = INCORRECT;

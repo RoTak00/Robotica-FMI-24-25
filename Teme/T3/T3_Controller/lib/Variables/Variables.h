@@ -6,7 +6,6 @@
 #include <Wire.h>
 #include <LiquidCrystal.h>
 
-// Initial values
 extern uint8_t game_state;
 
 extern uint64_t start_button_last_debounce_time;

@@ -54,7 +54,7 @@ void whileGameIdle()
 
 void whileGameStarting()
 {
-    // Every second, update the remaining seconds to start
+    // Every second, update the remaining seconds until start
     if (millis() - game_current_state_start_time > 1000 * (3 - seconds_to_start + 1))
     {
         master_lcd.setCursor(13, 1);
@@ -80,7 +80,8 @@ void whileGameStarting()
 
 void whileGamePlaying()
 {
-    // Daca este necesar sa trimitem din nou date catre slave
+    uint64_t polling_last_time = 0;
+    // This means we need to generate and send data to slave again
     if (received_from_slave == 0 && to_send_to_slave == 0)
     {
         if (current_player == PLAYER_1)
@@ -92,7 +93,7 @@ void whileGamePlaying()
             to_send_to_slave |= BTN_PLAYER_2;
         }
 
-        // Determinam cu random culoarea care trebuie apasata
+        // Determine randomly which color should be pressed
         uint8_t led_to_activate = random(0, 3); // 0 red // 1 yellow // 2 blue
 
         if (led_to_activate == 0)
@@ -108,24 +109,23 @@ void whileGamePlaying()
             to_send_to_slave |= BTN_BLUE;
         }
 
-        // Trimitem datele catre slave
+        // Send the data to the slave
         digitalWrite(SS, LOW);
         received_from_slave = SPI.transfer(to_send_to_slave);
         digitalWrite(SS, HIGH);
 
-        // Salvam timpul de start pentru calculul scorului
+        // Save the start of the send time to calculate the reaction time
         game_player_receive_button_start_time = millis();
     }
-    // Daca am primit un raspuns de la slave
+    // If a response was received from the slave
     else if ((received_from_slave & SPI_SLAVE_TRANSMIT) == SPI_SLAVE_TRANSMIT)
     {
-        // Verificam daca butonul apasat este cel pe care l-am trimis initial
+        // Check if the response is the same as the sent data
         if (received_from_slave == (to_send_to_slave | SPI_SLAVE_TRANSMIT))
         {
-            // Jucatorul primeste scor bazat pe timpul de reactie, max 2 secunde
+            // The player receives a score based on speed, maximum 2 seconds
             uint16_t player_press_delay = millis() - game_player_receive_button_start_time;
 
-            // pe baza astuia calculam scor
             if (current_player == PLAYER_1)
             {
                 if (player_press_delay > MAX_PLAYER_REACTION - MIN_SCORE)
@@ -150,25 +150,29 @@ void whileGamePlaying()
             }
         }
 
-        // Afisam scorul curent pe LCD (actualizat)
+        // Update the score on the LCD
         writeScoreLCD(player_1_score, player_2_score, 0);
 
-        // Actualizam jucatorul
+        // Update the player
         current_player = !current_player;
 
-        // Resetam datele trimise / primite
+        // Reset the sent / received data
         to_send_to_slave = 0;
         received_from_slave = 0;
     }
     else
     {
-        // Nu am primit date relevante de la slave, facem polling la fiecare 10 ms
-        _delay_ms(10);
 
-        digitalWrite(SS, LOW);
-        received_from_slave = SPI.transfer(ACK);
+        // We did not get relevant data from the slave. We poll for relevant data every 10 seconds
+        // Relevant data means the data contains the SPI_SLAVE_TRANSMIT flag
+        if (millis() - polling_last_time > 10)
+        {
+            digitalWrite(SS, LOW);
+            received_from_slave = SPI.transfer(ACK);
+            digitalWrite(SS, HIGH);
 
-        digitalWrite(SS, HIGH);
+            polling_last_time = millis();
+        }
 
         // Daca au trecut LIMIT_PLAYER_REACTION secunde, trecem la urmatorul jucator
         if (millis() - game_player_receive_button_start_time > LIMIT_PLAYER_REACTION)
@@ -180,10 +184,10 @@ void whileGamePlaying()
         }
     }
 
-    // Rotim servomotorul
+    // Rotate the servo based on the game time (SERVO_ANGLE is a nice macro)
     master_servo.write(SERVO_ANGLE);
 
-    // Verificam daca jocul s-a incheiat
+    // Check if the game should end
     if (millis() - game_current_state_start_time > PLAY_MAX_TIME)
     {
         game_state = GAME_STATE_IDLE;
@@ -192,8 +196,10 @@ void whileGamePlaying()
         start_button_last_state = HIGH;
         start_button_action = LOW;
 
+        // the last "1" parameter means that the W / L should be shown on the LCD
         writeScoreLCD(player_1_score, player_2_score, 1);
 
+        // this tells the slave to end the game
         digitalWrite(SS, LOW);
         SPI.transfer(END);
         digitalWrite(SS, HIGH);

@@ -3,7 +3,6 @@
 #include <Servo.h>
 #include <LiquidCrystal.h>
 
-// Define the variables here
 uint8_t game_state = 0;
 
 uint64_t start_button_last_debounce_time = 0;

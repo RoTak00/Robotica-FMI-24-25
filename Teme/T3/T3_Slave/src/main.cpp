@@ -3,8 +3,8 @@
 #include <Utils.h>
 #include <Variables.h>
 
-
-void setup() {
+void setup()
+{
   initSerial();
   initButtons();
   initLEDs();
@@ -19,16 +19,18 @@ ISR(SPI_STC_vect)
   slave_receive = SPDR;
 }
 
-void whilePlaying() {
+void whilePlaying()
+{
   // player 0
-  if (player == 0) {
-    // citim butonul apasat de player 0
+  if (player == 0)
+  {
+    // Read the button pressed by player 0
     uint8_t color0 = colorAnalog(analogRead(PLAYER0_Buttons));
-    // initializam mesajul care trebuie transmis
+    // Initialize the message that shoul be sent back
     uint8_t send = SPI_SLAVE_TRANSMIT | SPI_BTN_PLAYER_0;
 
     // debouncing
-    if (color0 != player0_button_last_state) 
+    if (color0 != player0_button_last_state)
     {
       player0_button_last_debounce_time = millis();
     }
@@ -37,34 +39,34 @@ void whilePlaying() {
       if (color0 != player0_button_state)
       {
         player0_button_state = color0;
-        // aprindem led speific fiecarui buton
-        // setam bitul pentru fiecare culoare
-        // trimitam raspuns masterului
+        // Turn on the LED specifically for each color
+        // Set the bit for each color
+        // Send the response to the master
         switch (color0)
         {
-          case BTN_RED:
-            digitalWrite(PLAYER0_Red, HIGH);
-            digitalWrite(PLAYER0_Blue, LOW);
-            digitalWrite(PLAYER0_Yellow, LOW);
-            send |= SPI_BTN_RED;
-            SPDR = send;
-            break;
-          case BTN_BLUE:
-            digitalWrite(PLAYER0_Blue, HIGH);
-            digitalWrite(PLAYER0_Red, LOW);
-            digitalWrite(PLAYER0_Yellow, LOW);
-            send |= SPI_BTN_BLUE;
-            SPDR = send;
-            break;
-          case BTN_YELLOW:
-            digitalWrite(PLAYER0_Blue, LOW);
-            digitalWrite(PLAYER0_Red, LOW);
-            digitalWrite(PLAYER0_Yellow, HIGH);
-            send |= SPI_BTN_YELLOW;
-            SPDR = send;
-            break;
-          default:
-            break;
+        case BTN_RED:
+          digitalWrite(PLAYER0_Red, HIGH);
+          digitalWrite(PLAYER0_Blue, LOW);
+          digitalWrite(PLAYER0_Yellow, LOW);
+          send |= SPI_BTN_RED;
+          SPDR = send;
+          break;
+        case BTN_BLUE:
+          digitalWrite(PLAYER0_Blue, HIGH);
+          digitalWrite(PLAYER0_Red, LOW);
+          digitalWrite(PLAYER0_Yellow, LOW);
+          send |= SPI_BTN_BLUE;
+          SPDR = send;
+          break;
+        case BTN_YELLOW:
+          digitalWrite(PLAYER0_Blue, LOW);
+          digitalWrite(PLAYER0_Red, LOW);
+          digitalWrite(PLAYER0_Yellow, HIGH);
+          send |= SPI_BTN_YELLOW;
+          SPDR = send;
+          break;
+        default:
+          break;
         }
         Serial.println(send);
       }
@@ -72,11 +74,12 @@ void whilePlaying() {
     player0_button_last_state = color0;
   }
 
-  //player 1
-  if (player == 1) {
+  // player 1
+  if (player == 1)
+  {
     uint8_t color1 = colorAnalog(analogRead(PLAYER1_Buttons));
     uint8_t send = SPI_SLAVE_TRANSMIT | SPI_BTN_PLAYER_1;
-    if (color1 != player1_button_last_state) 
+    if (color1 != player1_button_last_state)
     {
       player1_button_last_debounce_time = millis();
     }
@@ -87,44 +90,46 @@ void whilePlaying() {
         player1_button_state = color1;
         switch (color1)
         {
-          case BTN_RED:
-            digitalWrite(PLAYER1_Red, HIGH);
-            digitalWrite(PLAYER1_Blue, LOW);
-            digitalWrite(PLAYER1_Yellow, LOW);
-            send |= SPI_BTN_RED;
-            SPDR = send;
-            break;
-          case BTN_BLUE:
-            digitalWrite(PLAYER1_Blue, HIGH);
-            digitalWrite(PLAYER1_Red, LOW);
-            digitalWrite(PLAYER1_Yellow, LOW);
-            send |= SPI_BTN_BLUE;
-            SPDR = send;
-            break;
-          case BTN_YELLOW:
-            digitalWrite(PLAYER1_Blue, LOW);
-            digitalWrite(PLAYER1_Red, LOW);
-            digitalWrite(PLAYER1_Yellow, HIGH);
-            send |= SPI_BTN_YELLOW;
-            SPDR = send;
-            break;
-          default:
-            break;
+        case BTN_RED:
+          digitalWrite(PLAYER1_Red, HIGH);
+          digitalWrite(PLAYER1_Blue, LOW);
+          digitalWrite(PLAYER1_Yellow, LOW);
+          send |= SPI_BTN_RED;
+          SPDR = send;
+          break;
+        case BTN_BLUE:
+          digitalWrite(PLAYER1_Blue, HIGH);
+          digitalWrite(PLAYER1_Red, LOW);
+          digitalWrite(PLAYER1_Yellow, LOW);
+          send |= SPI_BTN_BLUE;
+          SPDR = send;
+          break;
+        case BTN_YELLOW:
+          digitalWrite(PLAYER1_Blue, LOW);
+          digitalWrite(PLAYER1_Red, LOW);
+          digitalWrite(PLAYER1_Yellow, HIGH);
+          send |= SPI_BTN_YELLOW;
+          SPDR = send;
+          break;
+        default:
+          break;
         }
         Serial.println(send);
       }
     }
     player1_button_last_state = color1;
   }
-} 
+}
 
-void loop() {
-  if(data_received)
+void loop()
+{
+  if (data_received)
   {
     SPDR = slave_receive;
     data_received = 0;
-    // daca primim semnalul de done inseamna ca jocul s-a termina si inchidem toate ledurile
-    if ((slave_receive & DONE) == DONE) {
+    // If we receive DONE, game is over, turn off all lights
+    if ((slave_receive & DONE) == DONE)
+    {
       Serial.print(slave_receive);
       player = NOT_PLAYING;
       digitalWrite(PLAYER1_R, LOW);
@@ -141,9 +146,10 @@ void loop() {
       digitalWrite(PLAYER0_Red, LOW);
     }
 
-    if ((slave_receive & SPI_BTN_PLAYER_0) == SPI_BTN_PLAYER_0) {
+    if ((slave_receive & SPI_BTN_PLAYER_0) == SPI_BTN_PLAYER_0)
+    {
       player = 0;
-      // inchidem toate ledurile celuilalt jucator
+      // Turn off the lights of the other player
       digitalWrite(PLAYER1_R, LOW);
       digitalWrite(PLAYER1_G, LOW);
       digitalWrite(PLAYER1_B, LOW);
@@ -152,25 +158,28 @@ void loop() {
       digitalWrite(PLAYER1_Red, LOW);
       Serial.print("Player 0:");
       Serial.println(slave_receive);
-      if ((slave_receive & SPI_BTN_BLUE) == SPI_BTN_BLUE) {
+      if ((slave_receive & SPI_BTN_BLUE) == SPI_BTN_BLUE)
+      {
         digitalWrite(PLAYER0_B, HIGH);
         digitalWrite(PLAYER0_R, LOW);
         digitalWrite(PLAYER0_G, LOW);
       }
-      if ((slave_receive & SPI_BTN_RED) == SPI_BTN_RED) {
+      if ((slave_receive & SPI_BTN_RED) == SPI_BTN_RED)
+      {
         digitalWrite(PLAYER0_B, LOW);
         digitalWrite(PLAYER0_R, HIGH);
         digitalWrite(PLAYER0_G, LOW);
       }
-      if ((slave_receive & SPI_BTN_YELLOW) == SPI_BTN_YELLOW) {
+      if ((slave_receive & SPI_BTN_YELLOW) == SPI_BTN_YELLOW)
+      {
         digitalWrite(PLAYER0_B, LOW);
         digitalWrite(PLAYER0_R, HIGH);
         digitalWrite(PLAYER0_G, HIGH);
       }
     }
-    if ((slave_receive & SPI_BTN_PLAYER_1) == SPI_BTN_PLAYER_1) {
+    if ((slave_receive & SPI_BTN_PLAYER_1) == SPI_BTN_PLAYER_1)
+    {
       player = 1;
-      // inchidem toate ledurile celuilalt jucator
       digitalWrite(PLAYER0_R, LOW);
       digitalWrite(PLAYER0_G, LOW);
       digitalWrite(PLAYER0_B, LOW);
@@ -179,17 +188,20 @@ void loop() {
       digitalWrite(PLAYER0_Red, LOW);
       Serial.print("Player 1:");
       Serial.println(slave_receive);
-      if ((slave_receive & SPI_BTN_BLUE) == SPI_BTN_BLUE) {
+      if ((slave_receive & SPI_BTN_BLUE) == SPI_BTN_BLUE)
+      {
         digitalWrite(PLAYER1_B, HIGH);
         digitalWrite(PLAYER1_R, LOW);
         digitalWrite(PLAYER1_G, LOW);
       }
-      if ((slave_receive & SPI_BTN_RED) == SPI_BTN_RED) {
+      if ((slave_receive & SPI_BTN_RED) == SPI_BTN_RED)
+      {
         digitalWrite(PLAYER1_B, LOW);
         digitalWrite(PLAYER1_R, HIGH);
         digitalWrite(PLAYER1_G, LOW);
       }
-      if ((slave_receive & SPI_BTN_YELLOW) == SPI_BTN_YELLOW) {
+      if ((slave_receive & SPI_BTN_YELLOW) == SPI_BTN_YELLOW)
+      {
         digitalWrite(PLAYER1_B, LOW);
         digitalWrite(PLAYER1_R, HIGH);
         digitalWrite(PLAYER1_G, HIGH);

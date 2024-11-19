@@ -50,6 +50,7 @@ void initVars();
 #define LCD_D5 5
 #define LCD_D4 4
 
+// I prefer this, I write in PHP a lot
 #define die() exit(1)
 
 void printByte(uint8_t b);

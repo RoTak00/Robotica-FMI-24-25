@@ -70,11 +70,31 @@ Odată ce se primește valoarea END de la Master, se trece în starea NOT_PLAYIN
 
 # 1.5 Imagini Montaj
 
-(TODO)
+Click pentru a deschide imaginile in fullscreen
+
+## 1.5.1 Imaginea 1 - Detaliu Slave
+
+<a href = "https://images.rotak.ro/github/robotica_3/4.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/4.jpeg" width = "300"></a>
+
+## 1.5.2 Imaginea 2 - Detaliu Controller
+
+<a href = "https://images.rotak.ro/github/robotica_3/5.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/5.jpeg" width = "300"></a>
+
+## 1.5.3 Imaginea 3 - In timpul jocului I
+
+<a href = "https://images.rotak.ro/github/robotica_3/1.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/1.jpeg" width = "300"></a>
+
+## 1.5.3 Imaginea 4 - In timpul jocului II
+
+<a href = "https://images.rotak.ro/github/robotica_3/2.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/2.jpeg" width = "300"></a>
+
+## 1.5.3 Imaginea 5 - Detaliu LCD
+
+<a href = "https://images.rotak.ro/github/robotica_3/3.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/3.jpeg" width = "300"></a>
 
 # 1.6 Videoclip Montaj
 
-(TODO)
+Un videoclip YouTube care demonstrează funcționalitatea montajului poate fi vizionat la [următorul link](https://www.youtube.com/watch?v=fU7H8QOQamY)
 
 # 1.7 Schema Electrica
 
