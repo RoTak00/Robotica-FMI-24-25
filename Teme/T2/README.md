@@ -44,11 +44,11 @@ Stări posibile:
 
 ## 1.5.1. Montaj
 
-<a href = "https://images.rotak.ro/github/robotica_2/real_1.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_2/real_1.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_2/real_1.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_2/real_1.jpeg" width = "300"></a>
 
 ## 1.5.2. Montaj
 
-<a href = "https://images.rotak.ro/github/robotica_2/real_2.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_2/real_2.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_2/real_2.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_2/real_2.jpeg" width = "300"></a>
 
 # 1.6 Videoclip Montaj
 
@@ -56,6 +56,6 @@ Stări posibile:
 
 # 1.7 Schema Electrica
 
-<a href = "https://images.rotak.ro/github/robotica_2/digital.png" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_2/digital.png" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_2/digital.png" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_2/digital.png" width = "300"></a>
 
 Takacs Robert

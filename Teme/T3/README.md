@@ -74,23 +74,23 @@ Click pentru a deschide imaginile in fullscreen
 
 ## 1.5.1 Imaginea 1 - Detaliu Slave
 
-<a href = "https://images.rotak.ro/github/robotica_3/4.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/4.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_3/4.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_3/4.jpeg" width = "300"></a>
 
 ## 1.5.2 Imaginea 2 - Detaliu Controller
 
-<a href = "https://images.rotak.ro/github/robotica_3/5.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/5.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_3/5.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_3/5.jpeg" width = "300"></a>
 
 ## 1.5.3 Imaginea 3 - In timpul jocului I
 
-<a href = "https://images.rotak.ro/github/robotica_3/1.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/1.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_3/1.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_3/1.jpeg" width = "300"></a>
 
 ## 1.5.3 Imaginea 4 - In timpul jocului II
 
-<a href = "https://images.rotak.ro/github/robotica_3/2.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/2.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_3/2.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_3/2.jpeg" width = "300"></a>
 
 ## 1.5.3 Imaginea 5 - Detaliu LCD
 
-<a href = "https://images.rotak.ro/github/robotica_3/3.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/3.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_3/3.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_3/3.jpeg" width = "300"></a>
 
 # 1.6 Videoclip Montaj
 
@@ -100,6 +100,6 @@ Un videoclip YouTube care demonstrează funcționalitatea montajului poate fi vi
 
 Click pentru a deschide imaginea in fullscreen
 
-<a href = "https://images.rotak.ro/github/robotica_3/schema_electrica.png" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_3/schema_electrica.png" width = "600"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_3/schema_electrica.png" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_3/schema_electrica.png" width = "600"></a>
 
 Alexandru Norina & Takacs Robert

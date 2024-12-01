@@ -40,19 +40,19 @@ LED-ul RGB folosit diferă față de cel din simulator. Astfel, acesta are pinii
 
 ## 1.5.1. Montaj
 
-<a href = "https://images.rotak.ro/github/robotica_1/Montaj.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_1/Montaj.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_1/Montaj.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_1/Montaj.jpeg" width = "300"></a>
 
 ## 1.5.2. Detaliu Pini
 
-<a href = "https://images.rotak.ro/github/robotica_1/Detaliu_Pini.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_1/Detaliu_Pini.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_1/Detaliu_Pini.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_1/Detaliu_Pini.jpeg" width = "300"></a>
 
 ## 1.5.3. Detaliu LED-uri
 
-<a href = "https://images.rotak.ro/github/robotica_1/Detaliu_LED-uri.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_1/Detaliu_LED-uri.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_1/Detaliu_LED-uri.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_1/Detaliu_LED-uri.jpeg" width = "300"></a>
 
 ## 1.5.4. Detaliu Butoane
 
-<a href = "https://images.rotak.ro/github/robotica_1/Detaliu_Butoane.jpeg" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_1/Detaliu_Butoane.jpeg" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_1/Detaliu_Butoane.jpeg" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_1/Detaliu_Butoane.jpeg" width = "300"></a>
 
 # 1.6 Videoclip Montaj
 
@@ -60,6 +60,6 @@ Un videoclip YouTube Shorts care demonstrează funcționalitatea montajului poat
 
 # 1.7 Schema Electrica
 
-<a href = "https://images.rotak.ro/github/robotica_1/Model.png" target = "_blank"><img src = "https://images.rotak.ro/github/robotica_1/Model.png" width = "300"></a>
+<a href = "https://images.roberttakacs.ro/github/robotica_1/Model.png" target = "_blank"><img src = "https://images.roberttakacs.ro/github/robotica_1/Model.png" width = "300"></a>
 
 Takacs Robert
